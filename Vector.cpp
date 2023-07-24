@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
 class Vector{
     int *arr= nullptr;
     int size=0;
