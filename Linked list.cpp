@@ -10,7 +10,6 @@ struct node{
 };
 
 
-
 class linked_list{
     node *head;
     node *tail;
