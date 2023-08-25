@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 struct node{
     int data;
     node * next= nullptr;
@@ -118,7 +119,7 @@ public:
             int x=1;
             for(node*cur=head;cur;cur=cur->next){
                 if(x==index){
-                    delete_and_link(cur);
+                    cur=delete_and_link(cur);
                     break;
                 }
                 x++;
@@ -126,16 +127,17 @@ public:
         }
     }
 
-    void delete_and_link(node*Node){
-        // لما تحل الهارد ابق عدلها و خليها ترجع النود الي عليها الدور زي م الدكتور عامل
+    node* delete_and_link(node*Node){
         if(Node==head)
             delete_front();
         else if(Node==tail)
             delete_end();
         else{
+            node*ret=Node->previous;
             Node->next->previous = Node->previous;
             Node->previous->next=Node->next;
             delete Node;
+            return ret;
         }
     }
 
@@ -149,7 +151,7 @@ public:
         else {
             for (node *temp = head; temp; temp = temp->next) {
                 if (temp->data == n) {
-                    delete_and_link(temp);
+                    temp=delete_and_link(temp);
                     break;
                 }
             }
@@ -158,27 +160,12 @@ public:
 
     void delete_all_nodes_with_key(int n){
         if(!head)
-            cout<<"The list is already empty"<<endl;
-        else{
-            for(node*cur=head;cur;){
-                if(cur->data==n){
-                    node*next=cur->next;
-                    if(cur==head){
-                        delete_front();
-                        cur=next;
-                    }
-                    else if(cur==tail){
-                        delete_end();
-                        break;
-                    }
-                    else{
-                        delete_and_link(cur);
-                        cur=next;
-                    }
-                }
-                else
-                    cur=cur->next;
-            }
+            return;
+        for(node*cur=head;cur;){
+            if(cur->data==n)
+                cur= delete_and_link(cur);
+            else
+                cur=cur->next;
         }
     }
 
@@ -188,18 +175,14 @@ public:
         else{
             int x=1;
             for(node*cur=head;cur;){
-                if(x%2==0){
-                    node*next=cur->next;
-                    delete_and_link(cur);
-                    cur=next;
-                }
+                if(x%2==0)
+                    cur= delete_and_link(cur);
                 else
                     cur=cur->next;
                 x++;
             }
         }
     }
-
     void delete_odd_positions(){
         insert_front(-1);
         delete_even_positions();
@@ -223,6 +206,10 @@ public:
     }
 
 
+    int get_tail(){
+        return tail->data;
+    }
+
     void print(){
         for(node*temp=head;temp;temp=temp->next){
             cout<<temp->data<<" ";
@@ -232,13 +219,8 @@ public:
 
 };
 
-void solve(){
 
-
-}
 int main() {
-     // delete and link function
-     // لما تحل الهارد ابق عدلها و خليها ترجع النود الي عليها الدور زي م الدكتور عامل
-  
+
 }
 
