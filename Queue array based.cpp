@@ -37,6 +37,9 @@ public:
         return added_elements==size;
     }
 
+    int get_front(){
+        return arr[front];
+    }
     void print(){
         if(is_empty()) {
             cout << "The queue is already empty" << endl;
@@ -50,6 +53,41 @@ public:
 
 };
 
+
+
+class Stack{
+private:
+    Queue q;
+    int added_elements=0;
+public:
+    Stack(int size):q(size){}
+    void push(int num){
+        int size=added_elements;
+        q.enqueue(num);
+        while (size--){
+            q.enqueue(q.get_front());
+            q.dequeue();
+        }
+        added_elements++;
+    }
+
+    void pop(){
+        if(is_empty()){
+            cout<<"The stack is already empty"<<endl;
+            return;
+        }
+        q.dequeue();
+        added_elements--;
+    }
+
+    int get_head(){
+        return q.get_front();
+    }
+
+    bool is_empty(){
+        return added_elements==0;
+    }
+};
 class Deque{
 private:
     int front,rear,size,added_elements;
