@@ -55,39 +55,6 @@ public:
 
 
 
-class Stack{
-private:
-    Queue q;
-    int added_elements=0;
-public:
-    Stack(int size):q(size){}
-    void push(int num){
-        int size=added_elements;
-        q.enqueue(num);
-        while (size--){
-            q.enqueue(q.get_front());
-            q.dequeue();
-        }
-        added_elements++;
-    }
-
-    void pop(){
-        if(is_empty()){
-            cout<<"The stack is already empty"<<endl;
-            return;
-        }
-        q.dequeue();
-        added_elements--;
-    }
-
-    int get_head(){
-        return q.get_front();
-    }
-
-    bool is_empty(){
-        return added_elements==0;
-    }
-};
 class Deque{
 private:
     int front,rear,size,added_elements;
@@ -161,6 +128,103 @@ public:
     }
 
 };
+
+
+class Stack{
+private:
+    Queue q;
+    int added_elements=0;
+public:
+    Stack(int size):q(size){}
+    void push(int num){
+        int size=added_elements;
+        q.enqueue(num);
+        while (size--){
+            q.enqueue(q.get_front());
+            q.dequeue();
+        }
+        added_elements++;
+    }
+
+    void pop(){
+        if(is_empty()){
+            cout<<"The stack is already empty"<<endl;
+            return;
+        }
+        q.dequeue();
+        added_elements--;
+    }
+
+    int get_head(){
+        return q.get_front();
+    }
+
+    bool is_empty(){
+        return added_elements==0;
+    }
+};
+
+void move(Stack&s1,Stack&s2){
+    while (!s1.is_empty()){
+        s2.push(s1.get_head());
+        s1.pop();
+    }
+}
+
+
+class queue_2stacks{
+    int size;
+    int added_elements=0;
+    Stack s1;
+    Stack s2;
+public:
+    queue_2stacks(int size):size(size),s1(size),s2(size){}
+
+    void enqueue(int num){
+        if(is_full()) {
+            cout << "The queue is already full" << endl;
+            return;
+        }
+        move(s1,s2);
+        s1.push(num);
+        move(s2,s1);
+        added_elements++;
+    }
+
+    void dequeue(){
+        if(is_empty()) {
+            cout << "The queue is already empty" << endl;
+            return;
+        }
+        s1.pop();
+        added_elements--;
+    }
+
+    bool is_empty(){
+        return added_elements==0;
+    }
+
+    bool is_full(){
+        return added_elements==size;
+    }
+
+    int get_front(){
+        return s1.get_head();
+    }
+    void print(){
+        if(is_empty()) {
+            cout << "The queue is already empty" << endl;
+            return;
+        }
+        while(!s1.is_empty()) {
+            cout << s1.get_head() << " ";
+            s1.pop();
+        }
+    }
+
+
+};
+
 
 
 
