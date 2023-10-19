@@ -3,12 +3,12 @@ using namespace std;
 
 
 class bst{
-        // in order LVR
-        // post order LRV
-        // pre order VLR
+    // in order LVR
+    // post order LRV
+    // pre order VLR
 
-        // n=2^(h+1)-1
-        // h=log(n+1)-1
+    // n=2^(h+1)-1
+    // h=log(n+1)-1
 
 private:
     int data=0;
@@ -156,18 +156,20 @@ public:
                 node=node->right;
             else if(!node->right)         //case2: left only --> delete and link with the left
                 node=node->left;
-            else{                         //case3: left and right --> find successor, copy and delete
-                bst* successor=node->right->min_node();
+            else{                         //case3: left and right --> find successor, copy and 
+                // we can do it with recursive call for delete_node function
+                bst*before_successor=node->right;
+                bst* successor=node->right;
+                while(successor->left){
+                    before_successor=successor;
+                    successor=successor->left;
+                }
+
                 node->data=successor->data;
-                //node->right= delete_node(node->data,node->right); //delete successor recursevly
-                //or
-                if(node->right==successor)
-                    node->right= nullptr;
-                else {
-                    bst *before_successor = node->right;
-                    while (before_successor->left->left)
-                        before_successor = before_successor->left;
-                    before_successor->left = successor->right;
+                if(before_successor->right==successor)
+                    before_successor->right=successor->right;
+                else{
+                    before_successor->left=successor->right;
                 }
                 delete successor;
                 temp= nullptr;
@@ -206,7 +208,7 @@ public:
         }
         return node;
     }
-    
+
 
     vector<int> get_inorder(){
 
@@ -350,5 +352,4 @@ int main() {
     cout<<endl<<t2->tree_min();
 
 }
-
 
